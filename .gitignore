@@ -1,0 +1,48 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+*.pot
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.sqlite3
+db.sqlite3
+/staticfiles
+/media
+
+# Env files
+.env
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Python environment
+.Python
+env/
+venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

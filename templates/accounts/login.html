@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow mt-10">
+  <h2 class="text-2xl font-semibold mb-6">Login</h2>
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">{{ field.label }}</label>
+        <input name="{{ field.html_name }}" type="{{ field.field.widget.input_type }}"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          {% if field.value %}value="{{ field.value }}"{% endif %}>
+      </div>
+    {% endfor %}
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Login</button>
+  </form>
+  <p class="text-sm text-center mt-4 text-gray-500">
+    No account? <a href="{% url 'register' %}" class="text-blue-600 hover:underline">Register</a>
+  </p>
+</div>
+{% endblock %}

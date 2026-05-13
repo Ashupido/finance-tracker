@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="flex items-center justify-between mb-6">
+  <h2 class="text-2xl font-semibold">Monthly Budgets</h2>
+  <a href="{% url 'budget_add' %}" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">+ Add Budget</a>
+</div>
+
+<div class="space-y-4">
+  {% for item in budget_data %}
+  <div class="bg-white rounded-xl p-6 shadow">
+    <div class="flex items-center justify-between mb-3">
+      <strong class="text-lg text-gray-900">{{ item.budget.category.name }}</strong>
+      <span class="text-sm font-semibold {% if item.over %}text-red-600{% else %}text-green-600{% endif %}">
+        ${{ item.spent }} / ${{ item.budget.limit }}
+      </span>
+    </div>
+    <div class="bg-gray-100 rounded-full h-3 overflow-hidden">
+      <div class="h-3 rounded-full {% if item.over %}bg-red-500{% else %}bg-green-500{% endif %}" style="width:{{ item.percentage }}%;"></div>
+    </div>
+    <p class="text-sm text-gray-500 mt-2">{{ item.percentage }}% used</p>
+  </div>
+  {% empty %}
+  <div class="bg-white rounded-xl p-6 shadow text-center">
+    <p class="text-gray-600">No budgets set for this month.</p>
+    <a href="{% url 'budget_add' %}" class="mt-4 inline-block text-blue-600 hover:underline">Add one</a>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

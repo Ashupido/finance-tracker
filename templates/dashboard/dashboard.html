@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="text-2xl font-semibold mb-6">Dashboard</h2>
+
+<!-- Summary cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <div class="bg-white rounded-xl p-6 shadow">
+    <p class="text-gray-500 text-sm">Total Income</p>
+    <p class="text-3xl font-bold text-green-600 mt-1">${{ total_income }}</p>
+  </div>
+  <div class="bg-white rounded-xl p-6 shadow">
+    <p class="text-gray-500 text-sm">Total Expenses</p>
+    <p class="text-3xl font-bold text-red-500 mt-1">${{ total_expense }}</p>
+  </div>
+  <div class="bg-white rounded-xl p-6 shadow">
+    <p class="text-gray-500 text-sm">Balance</p>
+    <p class="text-3xl font-bold text-blue-600 mt-1">${{ balance }}</p>
+  </div>
+</div>
+
+<!-- Chart -->
+<div class="bg-white rounded-xl p-6 shadow mb-8 max-w-full md:max-w-sm">
+  <h3 class="text-lg font-semibold mb-4">Spending by Category</h3>
+  <canvas id="pieChart"></canvas>
+</div>
+
+<!-- Recent transactions -->
+<div class="bg-white rounded-xl p-6 shadow">
+  <h3 class="text-lg font-semibold mb-4">Recent Transactions</h3>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="text-left text-gray-500 border-b">
+          <th class="pb-2">Date</th>
+          <th class="pb-2">Title</th>
+          <th class="pb-2">Category</th>
+          <th class="pb-2">Type</th>
+          <th class="pb-2">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in recent_transactions %}
+        <tr class="border-b last:border-0">
+          <td class="py-2">{{ t.date }}</td>
+          <td class="py-2">{{ t.title }}</td>
+          <td class="py-2">{{ t.category }}</td>
+          <td class="py-2">
+            <span class="px-2 py-1 rounded-full text-xs {% if t.type == 'income' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+              {{ t.type }}
+            </span>
+          </td>
+          <td class="py-2 font-medium">${{ t.amount }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="py-4 text-gray-400">No transactions yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-4 flex flex-col sm:flex-row gap-4">
+    <a href="{% url 'transaction_add' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 text-center">+ Add Transaction</a>
+    <a href="{% url 'transaction_list' %}" class="text-blue-600 text-sm px-4 py-2 hover:underline text-center">View All</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: {{ pie_labels|safe }},
+      datasets: [{
+        data: {{ pie_data|safe }},
+        backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF'],
+      }]
+    }
+  });
+</script>
+
+{% endblock %}

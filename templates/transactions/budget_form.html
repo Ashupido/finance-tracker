@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-lg mx-auto bg-white p-8 rounded-xl shadow mt-10">
+  <h2 class="text-2xl font-semibold mb-6">Add Budget</h2>
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+          <p class="text-xs text-gray-400 mt-1">{{ field.help_text }}</p>
+        {% endif %}
+        {% if field.errors %}
+          <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="flex gap-4">
+      <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Save</button>
+      <a href="{% url 'budget_list' %}" class="inline-flex items-center justify-center border border-gray-300 rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

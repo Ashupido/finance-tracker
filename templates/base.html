@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+{% if user.is_authenticated %}
+<nav class="bg-gray-900 px-6 py-4 flex gap-6 items-center">
+  <span class="text-white font-bold text-lg">💰 Finance Tracker</span>
+  <a href="{% url 'dashboard' %}" class="text-gray-300 hover:text-white">Dashboard</a>
+  <a href="{% url 'transaction_list' %}" class="text-gray-300 hover:text-white">Transactions</a>
+  <a href="{% url 'transaction_add' %}" class="text-gray-300 hover:text-white">+ Add</a>
+  <a href="{% url 'budget_list' %}" class="text-gray-300 hover:text-white">Budgets</a>
+  <a href="{% url 'export_csv' %}" class="text-gray-300 hover:text-white">Export CSV</a>
+  <a href="{% url 'logout' %}" class="text-gray-300 hover:text-white ml-auto">Logout</a>
+</nav>
+{% endif %}
+
+<div class="max-w-5xl mx-auto px-4 py-8">
+  {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
