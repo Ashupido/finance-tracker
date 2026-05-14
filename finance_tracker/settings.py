@@ -15,6 +15,8 @@ load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+DEMO_MODE = os.getenv('DEMO_MODE', 'False') == 'True'
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'accounts',
     'transactions',
     'dashboard',
+    'insights',
 
 ]
 
